@@ -1,0 +1,28 @@
+name: Build Sinum iOS
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          brew update
+          brew install cmake git
+
+      - name: Make scripts executable
+        run: |
+          chmod +x Sinum/iOS/build-mac.sh
+
+      - name: Run build
+        run: |
+          cd Sinum/iOS
+          ./build-mac.sh
