@@ -1,4 +1,4 @@
-name: Build Sinum
+name: Build Sinum iOS
 
 on:
   workflow_dispatch:
@@ -9,19 +9,13 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Debug files
-        run: |
-          ls -R
+      - name: Make script executable
+        run: chmod +x iOS/build-mac.sh
 
-      - name: Find build script
+      - name: Run build
         run: |
-          find . -name "build-mac.sh" || true
-
-      - name: Run build if exists
-        run: |
-          chmod +x $(find . -name "build-mac.sh" | head -n 1)
-          cd $(dirname $(find . -name "build-mac.sh" | head -n 1))
+          cd iOS
           ./build-mac.sh
